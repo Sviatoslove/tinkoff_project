@@ -1,3 +1,5 @@
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +12,45 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.listOperItem-enter {
+  opacity: 0;
+  transform: translateX(-350px);
+
+}
+.listOperItem-enter-active {
+  opacity: 1;
+  transform: translateX(0px);
+  transition: opacity 600ms ease-in, transform 750ms ease-in;
+}
+.listOperItem-exit {
+  opacity: 1;
+}
+.listOperItem-exit-active {
+  transform: translateX(-350px);
+  opacity: 0;
+  transition: opacity 600ms ease-in, transform 750ms ease-in;
+}
+
+.listOperGroup {
+  width: 100%;
+}
+
+.listOper-enter {
+  opacity: 0;
+  transform: translateY(350px);
+}
+.listOper-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: opacity 600ms ease-in, transform 750ms ease-in;
+}
+.listOper-exit {
+  opacity: 1;
+}
+.listOper-exit-active {
+  transform: translateY(350px);
+  opacity: 0;
+  transition: opacity 600ms ease-in, transform 750ms ease-in;
 }
