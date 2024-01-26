@@ -2,6 +2,7 @@ export interface ICategories {
   id: string;
   name: string;
   dataType?: string;
+  bgColor?: string
 }
 
 export interface IUser extends ICategories {

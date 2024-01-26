@@ -59,6 +59,8 @@ const SelectedField = ({
         name={name}
         id={id || name}
         disabled={!options || !!category}
+        w={'100%'}
+
       >
         {optionsArray?.map((option) => {
           return (

@@ -51,16 +51,26 @@ const operationsSlice = createSlice({
     },
     operationsReceived: (state, action) => {
       const { payload } = action;
+      let idCategory
       if (!state.entities) state.entities = [];
       if (payload.dataType === 'operations') {
         if (typeof payload.category === 'object') {
           if (!state.categories) state.categories = [];
+          const categoryUniq = state.categories.some(({ name, id }) => {
+            if(name === payload.category.name) {
+              idCategory = id
+              return true
+            }
+            return false
+          })
           if (
-            !state.categories.some(({ name }) => name === payload.category.name)
+            !categoryUniq
           ) {
             state.categories.push(payload.category);
-          }
-          state.entities.push({ ...payload, category: payload.category.id });
+            state.entities.push({ ...payload, category: payload.category.id });
+          }else {
+          state.entities.push({ ...payload, category: idCategory });
+        }
         } else state.entities.push(payload);
       } else {
         if (!state.categories) state.categories = [];
@@ -154,24 +164,24 @@ const {
 } = actions;
 
 export const getDataOperLocal = () => async (dispatch: AppDispatch) => {
-  dispatch(operationsRequested());
-  const user = localStorageService.getUser();
   const count = localStorageService.getCount();
+  dispatch(getDataCountsLocal(count));
+  const user = localStorageService.getUser();
   const dates = localStorageService.getDates();
   const categories = localStorageService.getCategories();
   const oper = localStorageService.getOper();
-
+  
+  dispatch(operationsRequested());
   const data = await operationCreate(user);
-
+  
   dispatch(
     getDataFromLocal({
       dates,
       categories,
       oper,
     })
-  );
+    );
   dispatch(getDataUserLocal(data));
-  dispatch(getDataCountsLocal(count));
 };
 
 export const categoriesAdd =

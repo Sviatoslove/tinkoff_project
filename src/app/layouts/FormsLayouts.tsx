@@ -13,7 +13,7 @@ const FormsLayouts = ({ user }: FormsLayoutsProps) => {
 
   useEffect(() => {
     if (!user) openingForm('greeting');
-    if(user)onClose()
+    if (localStorage.getItem('user')) onClose();
   }, [user]);
 
   return (
@@ -23,9 +23,7 @@ const FormsLayouts = ({ user }: FormsLayoutsProps) => {
       onClose={onClose}
       user={user}
     >
-      <CountsForm 
-      user={user}
-      />
+      <CountsForm user={user} />
     </ModalWindow>
   );
 };

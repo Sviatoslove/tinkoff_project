@@ -4,10 +4,14 @@ import { selectCounts } from '../../../store/countsSlice';
 import { AddIcon } from '@chakra-ui/icons';
 import InteractionCount from '../InteractionCount';
 import { useIteractionCount } from '../../../hooks/useInteractionCount';
+import { selectOperations } from '../../../store/operationsSlice';
 
 const CountsBadge = () => {
   const counts = useAppSelector(selectCounts());
+  const operations = useAppSelector(selectOperations());
   const { handleClickCount } = useIteractionCount();
+  const position = operations ? 'absolute' : undefined;
+  const marginBottom = position ? 4: 1;
 
   return (
     <Flex
@@ -22,6 +26,7 @@ const CountsBadge = () => {
     >
       <Flex
         alignItems={'center'}
+        position={'relative'}
         mb={2}
         h={'100%'}
         data-countid={counts && counts[0].id}
@@ -29,13 +34,17 @@ const CountsBadge = () => {
       >
         {counts && (
           <>
-            <img
-              className="imgCount"
-              src={counts[0].icon}
-              width={100}
-              height={100}
-            />
-            <Flex direction={'column'} alignSelf={'end'} fontWeight={'bold'}>
+            <Flex position={position}
+            top={1} left={1}
+            >
+              <img
+                className="imgCount"
+                src={counts[0].icon}
+                width={100}
+                height={100}
+              />
+            </Flex>
+            <Flex direction={'column'} alignSelf={'end'} fontWeight={'bold'} mb={marginBottom}>
               <Text textAlign={'center'} mb={1}>
                 {counts[0].name}
               </Text>

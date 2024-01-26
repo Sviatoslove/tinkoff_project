@@ -11,12 +11,14 @@ import {
   selectIsLoadingOperations,
 } from '../../../store/operationsSlice';
 import { IUser } from '../../../../models';
+import { selectIsLoadingUser } from '../../../store/userSlice';
 
 const CountsForm = ({ user }: { user: IUser | null }) => {
   const isLoadingCount = useAppSelector(selectIsLoadingCount());
   const isLoadingOperation = useAppSelector(selectIsLoadingOperations());
+  const isLoadingUser = useAppSelector(selectIsLoadingUser());
   const categories = useAppSelector(selectCategories());
-  const { onSubmit, titleBtn, type, onClose, fieldName } = useIteractionCount();
+  const { onSubmit, titleBtn, onClose, fieldName } = useIteractionCount();
   const { defaultState } = fieldName;
 
   const useFormsDataProps: IStateProps = {
@@ -51,7 +53,7 @@ const CountsForm = ({ user }: { user: IUser | null }) => {
     selectField: ({ name, label, placeholder }: IFieldsProps) => (
       <SelectedField
         {...register(name, label)}
-        key={label}
+        // key={label}
         options={categories?.slice(1)}
         placeholder={placeholder}
         category={category}
@@ -63,7 +65,7 @@ const CountsForm = ({ user }: { user: IUser | null }) => {
   const getOptionArray = () => {
     return Object.values(fieldName)
       .slice(0, -1)
-      .map((field: any) => fields[field.typeField](field));
+      .map((field: any, idx) => <Flex key={idx}>{fields[field.typeField](field)}</Flex>);
   };
 
   if (selectCategory) delete errors.fields.category;
@@ -78,7 +80,7 @@ const CountsForm = ({ user }: { user: IUser | null }) => {
               colorScheme="green"
               type="submit"
               isDisabled={!!Object.values(errors.fields).length}
-              isLoading={isLoadingCount || isLoadingOperation}
+              isLoading={(isLoadingUser || isLoadingCount || isLoadingOperation)}
               loadingText="Отправка запроса"
             >
               {titleBtn}{' '}

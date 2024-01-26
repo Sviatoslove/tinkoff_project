@@ -26,6 +26,7 @@ const countsSlice = createSlice({
     getDataFromLocal: (state, action) => {
       const { payload } = action;
       if (payload) state.entities = payload;
+      state.isLoading = false;
     },
 
     countsReceived: (state, action) => {
@@ -79,7 +80,9 @@ const {
 
 export const getDataCountsLocal =
   (payload: any) => async (dispatch: AppDispatch) => {
-    dispatch(getDataFromLocal(payload));
+    dispatch(countsRequested())
+    const data = await countCreate(payload);
+    dispatch(getDataFromLocal(data));
   };
 
 export const countsSaved =
