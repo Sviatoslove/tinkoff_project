@@ -17,7 +17,7 @@ import { getRandomAvatar } from '../utils/getRandomAvatar';
 import getRandomNum from '../utils/getRandomNum';
 import Avatars from '../mockData';
 import { userSaved } from '../store/userSlice';
-import { COLORS, COLORSKeys } from '../utils/constants';
+import { getRandomColor } from '../utils/getRandomColor';
 
 export function useIteractionCount() {
   const dispatch = useAppDispatch();
@@ -25,7 +25,6 @@ export function useIteractionCount() {
   const counts = useAppSelector(selectCounts());
   const currentCount = useAppSelector(selectCurrentCount(typeForm.countId));
   const toast = useToast();
-  const colorsKeys = [...COLORSKeys];
 
   const onSubmit = (data: IFormsState) => {
     const { name, balance, content, category, selectCategory } =
@@ -91,7 +90,7 @@ export function useIteractionCount() {
                 name: category,
                 id: nanoid(),
                 dataType: 'categories',
-                bgColor: COLORS[colorsKeys.splice(getRandomNum(0, colorsKeys.length -1), 1).toString()],
+                bgColor: getRandomColor(),
               }
             : selectCategory,
         };

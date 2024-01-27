@@ -34,7 +34,7 @@ const useFormsData = ({ state }: IStateProps) => {
     error: errors.fields[field],
 
     onChange: (e: EventChange) => {
-      const { target } = e;
+      const { target }:any = e;
       return setData((prevState) => ({
         ...prevState,
         defaultState: { ...prevState.defaultState, [field]: target.value },

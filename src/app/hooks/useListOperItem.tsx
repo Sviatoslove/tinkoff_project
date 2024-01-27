@@ -25,11 +25,12 @@ import {
   HamburgerIcon,
 } from '@chakra-ui/icons';
 import SelectedField from '../components/common/form/SelectedField';
+import { getRandomColor } from '../utils/getRandomColor';
 
 const useListOperItem = (operation: IOperation) => {
   const dispatch = useAppDispatch();
   const isLoadingOperation = useAppSelector(selectIsLoadingOperations());
-  const categories: any = useAppSelector(selectCategories())
+  const categories: any = useAppSelector(selectCategories());
   const { onToast } = useForms();
   const [isEditing, setIsEditing] = useState<string>('');
   const [actionCategory, setActionCategory] = useState<string>('');
@@ -101,6 +102,7 @@ const useListOperItem = (operation: IOperation) => {
                 name: valueInput.category,
                 id: nanoid(),
                 dataType: 'categories',
+                bgColor: getRandomColor(),
               };
               dispatch(categoriesAdd(category, onToast, 'categoryAdd'));
               dispatch(
@@ -153,7 +155,7 @@ const useListOperItem = (operation: IOperation) => {
     setIsEditing('');
   };
 
-  const clearActive = (e: any) => {
+  const clearActive = () => {
     const activeElement: any = document.activeElement;
     if (activeElement) {
       activeElement.onblur = function () {
@@ -275,7 +277,8 @@ const useListOperItem = (operation: IOperation) => {
         {isEditing !== field ? (
           <Flex flexGrow={1} justifyContent={currency ? 'end' : 'start'}>
             <Text style={{ marginBottom: 0 }} color={editValue || 'grey'}>
-              {(currency && category !== 'Пополнение счёта' ? '-':'') + (editValue || '--здесь ничего нет--')}
+              {(currency && category !== 'Пополнение счёта' ? '-' : '') +
+                (editValue || '--здесь ничего нет--')}
             </Text>
           </Flex>
         ) : (

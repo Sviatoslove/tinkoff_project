@@ -1,12 +1,6 @@
-import {
-  Flex,
-  IconButton,
-  Tooltip,
-} from '@chakra-ui/react';
-import {IOperation } from '../../../models';
-import {
-  SmallCloseIcon,
-} from '@chakra-ui/icons';
+import { Flex, IconButton, Tooltip } from '@chakra-ui/react';
+import { IOperation } from '../../../models';
+import { SmallCloseIcon } from '@chakra-ui/icons';
 import SkeletonOperItem from '../common/SkeletonOperItem';
 import useListOperItem from '../../hooks/useListOperItem';
 
@@ -32,7 +26,7 @@ const ListOperItem = ({ operation }: { operation: IOperation }) => {
           }
           p={2}
         >
-          <Flex justify={'space-evenly'} align={'center'} >
+          <Flex justify={'space-evenly'} align={'center'}>
             {arrFields.map((field: any) =>
               showFields(settingsWidth[field], field)
             )}

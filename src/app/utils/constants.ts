@@ -3,7 +3,6 @@
 const COLORS: { [key: string]: string } = {
   primary: '#0d6efd',
   info: '#0dcaf0',
-  warning: '#ffc107',
   secondary: '#6c757d',
   danger: '#dc3545',
   light: '#f8f9fa',
@@ -26,7 +25,6 @@ const COLORS: { [key: string]: string } = {
 const COLORSKeys = [
   'primary',
   'info',
-  'warning',
   'danger',
   'orange',
   'violet',

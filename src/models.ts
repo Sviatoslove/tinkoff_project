@@ -47,4 +47,4 @@ export type EventClick = React.MouseEvent<
   HTMLButtonElement
 >;
 
-export type EventChange = React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+export type EventChange = React.ChangeEvent | React.MouseEvent<HTMLInputElement | HTMLSelectElement>

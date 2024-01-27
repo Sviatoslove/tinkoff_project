@@ -33,9 +33,8 @@ function App() {
     <Flex flexDirection={'column'} mx={'auto'} maxW="1230px" h="100dvh" p={2}>
       <FormsLayouts user={user} />
       {user && !IsLoadingCounts && (
-        <>
-          <SearchInput />
           <FiltersProvider>
+          <SearchInput />
             <Flex>
               <UserBadge user={user} />
               <CountsBadge />
@@ -48,13 +47,12 @@ function App() {
             </Flex>
             <OperationsHistory />
           </FiltersProvider>
-        </>
       )}
       {(loadingStatusUser || IsLoadingCounts || (IsLoadingCounts && !user)) && (
         <CustomSkeleton />
       )}
-      {/* <CustomSkeletn />
-       */}
+      {/* <CustomSkeleton /> */}
+      
     </Flex>
   );
 }
