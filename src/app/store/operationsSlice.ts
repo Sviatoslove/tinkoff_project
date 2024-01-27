@@ -17,7 +17,7 @@ import localStorageService from '../services/localStorage.service';
 import { getDataUserLocal } from './userSlice';
 
 interface IOpertionState {
-  entities: null | IOperation[];
+  entities: null | IOperation[] | undefined;
   categories: null | ICategories[];
   dates: string[];
   isLoading: boolean;

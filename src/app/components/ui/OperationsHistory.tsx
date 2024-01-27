@@ -1,11 +1,10 @@
 import { Flex } from '@chakra-ui/react';
 import ListOper from './ListOper';
-import { useAppSelector } from '../../hooks/hooks';
-import { selectDates } from '../../store/operationsSlice';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { useFilters } from '../../context/useFilters';
 
 const OperationsHistory = () => {
-  const dates: any = useAppSelector(selectDates());
+  const {dates} = useFilters()
 
   return (
     <Flex
@@ -20,10 +19,10 @@ const OperationsHistory = () => {
       scrollBehavior={'auto'}
       overflowY={'auto'}
     >
-      {!dates.length && <h1>У вас нет трат в этом месяце</h1>}
+      {!dates?.length && <h1>У вас нет трат в этом месяце</h1>}
       <TransitionGroup className="listOperGroup">
-        {!!dates.length &&
-          dates.map((date: any) => (
+        {!!dates?.length &&
+          dates?.map((date: any) => (
             <CSSTransition key={date} timeout={1100} classNames="listOper">
               <ListOper date={date} />
             </CSSTransition>

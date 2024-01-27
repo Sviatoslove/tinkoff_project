@@ -1,8 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { IOperation } from '../../models';
 import { selectCategories, selectOperations } from '../store/operationsSlice';
-import { useAppSelector } from '../hooks/hooks';
-import { IFormsProviderProps } from '../components/common/form/formSettings';
+import { useAppSelector } from './hooks';
 
 export interface IDataForChart {
   name:string,
@@ -11,31 +8,11 @@ export interface IDataForChart {
   categoryId:string,
 }
 
-export interface IDataAnalytics {
-  filteredOperations?:IOperation[]|undefined;
-  getCategoriesBalances:(view:string)=>  IDataForChart[];
-  getIncomeExpenses:() =>  IDataForChart[];
-  handleDivideCategories: (categoryId: string) => void;
-}
-
-const defaultState = {
-  filteredOperations:[],
-  getCategoriesBalances:(view:string) => [],
-  getIncomeExpenses:() => [],
-  handleDivideCategories: (categoryId: string) => {}
-};
-
-const AnalyticsContext = createContext<IDataAnalytics>(defaultState);
-
-const useAnalytics = () => useContext(AnalyticsContext);
-
-
-const AnalyticsProvider = ({ children }: IFormsProviderProps) => {
+export const useAnalytics = (view?:string): IDataForChart[] => {
   const operations: any = useAppSelector(selectOperations());
-  const [searchCategory, setSearchCategory] = useState<string>()
   const categories: any = useAppSelector(selectCategories());
 
-  const getCategoriesBalances = (view:string) => {
+  const getCategoriesBalances = () => {
     return categories?.reduce((acc: any, category: any) => {
       let totalBalanceDec = 0;
       let totalBalanceInc = 0;
@@ -54,7 +31,7 @@ const AnalyticsProvider = ({ children }: IFormsProviderProps) => {
         ...acc,
         {
           name: category.name,
-          value: !view
+          value: view
             ? incr
               ? totalBalanceInc
               : totalBalanceDec
@@ -88,23 +65,7 @@ const AnalyticsProvider = ({ children }: IFormsProviderProps) => {
     }, []);
   };
 
-    const handleDivideCategories = (categoryId: string) => {
-      setSearchCategory(categoryId)
-    };
+  const data = view ? getIncomeExpenses() : getCategoriesBalances()
 
-  return (
-    <AnalyticsContext.Provider
-      value={{
-        getCategoriesBalances,
-        getIncomeExpenses,
-        handleDivideCategories
-      }}
-    >
-      {children}
-    </AnalyticsContext.Provider>
-  );
+  return data
 }
-
-export { useAnalytics,
-  AnalyticsProvider};
-

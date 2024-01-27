@@ -1,11 +1,10 @@
 import { Divider, Flex, Text } from '@chakra-ui/react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { useAppSelector } from '../../hooks/hooks';
-import { selectOperations } from '../../store/operationsSlice';
 import ListOperItem from './ListOperItem';
+import { useFilters } from '../../context/useFilters';
 
 const ListOper = ({ date }: { date: string }) => {
-  const operations = useAppSelector(selectOperations());
+  const {filteredOperations} = useFilters()
 
   return (
     <Flex
@@ -25,7 +24,7 @@ const ListOper = ({ date }: { date: string }) => {
       }/>
       </Text>
       <TransitionGroup>
-        {operations?.map((operation) => {
+        {filteredOperations?.map((operation) => {
           if (operation.date === date)
             return (
               <CSSTransition

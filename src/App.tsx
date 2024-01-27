@@ -14,7 +14,7 @@ import OperationsHistory from './app/components/ui/OperationsHistory';
 import { useEffect } from 'react';
 import ChartsBadge from './app/components/ui/badges/ChartsBadge';
 import { selectIsLoadingCount } from './app/store/countsSlice';
-import { AnalyticsProvider } from './app/context/useAnalytics';
+import { FiltersProvider } from './app/context/useFilters';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -35,19 +35,19 @@ function App() {
       {user && !IsLoadingCounts && (
         <>
           <SearchInput />
-          <Flex>
-            <UserBadge user={user} />
-            <CountsBadge />
-            {operations && (
-              <AnalyticsProvider>
-                <ChartsBadge bg="#a9a958" />
-                <ChartsBadge bg="#5ab2b2" view="general" />
-              </AnalyticsProvider>
-            )}
-          </Flex>
-          <AnalyticsProvider>
+          <FiltersProvider>
+            <Flex>
+              <UserBadge user={user} />
+              <CountsBadge />
+              {operations && (
+                <>
+                  <ChartsBadge bg="#a9a958" view="general" />
+                  <ChartsBadge bg="#5ab2b2" />
+                </>
+              )}
+            </Flex>
             <OperationsHistory />
-          </AnalyticsProvider>
+          </FiltersProvider>
         </>
       )}
       {(loadingStatusUser || IsLoadingCounts || (IsLoadingCounts && !user)) && (

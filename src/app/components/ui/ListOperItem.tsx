@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/icons';
 import SkeletonOperItem from '../common/SkeletonOperItem';
 import useListOperItem from '../../hooks/useListOperItem';
-import { IValueOfTypes } from '../common/form/formSettings';
 
 const ListOperItem = ({ operation }: { operation: IOperation }) => {
   const {
@@ -29,7 +28,7 @@ const ListOperItem = ({ operation }: { operation: IOperation }) => {
           direction={'column'}
           borderRadius={15}
           shadow={
-            '2px 2px 4px 0px rgb(255 209 209), 1px 1px 4px 2px rgb(255 209 209)'
+            '2px 2px 4px 0px rgb(255 255 255), 1px 1px 4px 2px rgb(178 218 221)'
           }
           p={2}
         >
