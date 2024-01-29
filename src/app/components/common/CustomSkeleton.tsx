@@ -1,10 +1,13 @@
-import { Flex, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
-import { useAppSelector } from '../../hooks/hooks';
-import { selectCounts } from '../../store/countsSlice';
-import { selectOperations } from '../../store/operationsSlice';
+import {
+  Flex,
+  SkeletonCircle,
+  SkeletonText,
+  useColorMode,
+} from '@chakra-ui/react';
 
 const CustomSkeleton = () => {
-  const counts = !!localStorage.getItem('count')
+  const { colorMode } = useColorMode();
+  const counts = !!localStorage.getItem('count');
   const operations = !!localStorage.getItem('oper');
   return (
     <>
@@ -14,12 +17,13 @@ const CustomSkeleton = () => {
         spacing="4"
         skeletonHeight="8"
         boxShadow="lg"
+        // bg={'colorBadgeSkeletton.'+ colorMode}
       />
       <Flex>
         <Flex
           padding="2"
           boxShadow="lg"
-          bg="white"
+          bg={'colorBadgeSkeletton.' + colorMode}
           mt={2}
           w={'200px'}
           borderRadius={'10px'}
@@ -39,7 +43,7 @@ const CustomSkeleton = () => {
           <Flex
             padding="2"
             boxShadow="lg"
-            bg="white"
+            bg={'colorBadgeSkeletton.' + colorMode}
             mt={2}
             ml={2}
             w={'fit-content'}
@@ -61,21 +65,19 @@ const CustomSkeleton = () => {
           <Flex
             padding="2"
             boxShadow="lg"
-            bg="white"
+            bg={'colorBadgeSkeletton.' + colorMode}
             mt={2}
             ml={2}
             w={'fit-content'}
             borderRadius={'10px'}
             justifyContent={'space-between'}
-            flexGrow={operations ? 1:0}
+            flexGrow={operations ? 1 : 0}
           >
-            <Flex flexDirection={'column'}
-              flexGrow={1}
-            >
-              <Flex 
-              flexGrow={1}
-              flexDirection={operations?'column':'row'}
-              flexShrink={1}
+            <Flex flexDirection={'column'} flexGrow={1}>
+              <Flex
+                flexGrow={1}
+                flexDirection={operations ? 'column' : 'row'}
+                flexShrink={1}
               >
                 <SkeletonText
                   mb={2}
@@ -146,7 +148,7 @@ const CustomSkeleton = () => {
             <Flex
               padding="2"
               boxShadow="lg"
-              bg="white"
+              bg={'colorBadgeSkeletton.' + colorMode}
               mt={2}
               ml={2}
               w={'fit-content'}
@@ -166,7 +168,7 @@ const CustomSkeleton = () => {
             <Flex
               padding="2"
               boxShadow="lg"
-              bg="white"
+              bg={'colorBadgeSkeletton.' + colorMode}
               flexGrow={1}
               mt={2}
               ml={2}

@@ -2,9 +2,20 @@ import { Divider, Flex, Text } from '@chakra-ui/react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ListOperItem from './ListOperItem';
 import { useFilters } from '../../context/useFilters';
+import { IOperation } from '../../../models';
 
 const ListOper = ({ date }: { date: string }) => {
-  const {filteredOperations} = useFilters()
+  const { filteredOperations, searchCategory } = useFilters();
+
+  const getJSXListOperItem = (operation: IOperation) => (
+    <CSSTransition
+      key={operation.createdAt}
+      timeout={1100}
+      classNames="listOperItem"
+    >
+      <ListOperItem operation={operation} />
+    </CSSTransition>
+  );
 
   return (
     <Flex
@@ -19,22 +30,22 @@ const ListOper = ({ date }: { date: string }) => {
     >
       <Text ml={10} as="b" fontSize="3xl" w={'fit-content'}>
         {date}
-      <Divider mb={3} borderRadius={10} shadow={
-        '2px 2px 4px 0px rgb(255 255 255), 1px 1px 4px 2px rgb(251 251 251)'
-      }/>
+        <Divider
+          mb={3}
+          borderRadius={10}
+          shadow={
+            '2px 2px 4px 0px rgb(255 255 255), 1px 1px 4px 2px rgb(251 251 251)'
+          }
+        />
       </Text>
       <TransitionGroup>
         {filteredOperations?.map((operation) => {
-          if (operation.date === date)
-            return (
-              <CSSTransition
-                key={operation.createdAt}
-                timeout={1100}
-                classNames="listOperItem"
-              >
-                <ListOperItem operation={operation} />
-              </CSSTransition>
-            );
+          if (operation.date === date) {
+            if (searchCategory) {
+              if (operation.dataType !== 'topUpCount')
+                return getJSXListOperItem(operation);
+            } else return getJSXListOperItem(operation);
+          }
         })}
       </TransitionGroup>
     </Flex>

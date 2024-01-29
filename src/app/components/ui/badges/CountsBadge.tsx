@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Image, Text } from '@chakra-ui/react';
+import { Button, Flex, Icon, Image, Text, useColorMode } from '@chakra-ui/react';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectCounts } from '../../../store/countsSlice';
 import { AddIcon } from '@chakra-ui/icons';
@@ -7,6 +7,7 @@ import { useIteractionCount } from '../../../hooks/useInteractionCount';
 import { selectOperations } from '../../../store/operationsSlice';
 
 const CountsBadge = () => {
+  const { colorMode } = useColorMode();
   const counts = useAppSelector(selectCounts());
   const operations = useAppSelector(selectOperations());
   const { handleClickCount } = useIteractionCount();
@@ -16,7 +17,7 @@ const CountsBadge = () => {
   return (
     <Flex
       direction={'column'}
-      bg="#00ffff"
+      bg={'colorBadgeCounts.' + colorMode}
       px="10px"
       py="7px"
       borderRadius={'10px'}
@@ -45,7 +46,7 @@ const CountsBadge = () => {
               />
             </Flex>
             <Flex direction={'column'} alignSelf={'end'} fontWeight={'bold'} mb={marginBottom}>
-              <Text textAlign={'center'} mb={1}>
+              <Text textAlign={'center'} mb={1} lineHeight={'13px'}>
                 {counts[0].name}
               </Text>
               <Flex justifyContent={'center'} w={100} ml={2}>

@@ -1,9 +1,10 @@
+import { useFilters } from '../context/useFilters';
 import { selectCategories, selectOperations } from '../store/operationsSlice';
 import { useAppSelector } from './hooks';
 
 export interface IDataForChart {
   name:string,
-  value: string,
+  value?: string,
   bgColor:string,
   categoryId:string,
 }
@@ -11,6 +12,7 @@ export interface IDataForChart {
 export const useAnalytics = (view?:string): IDataForChart[] => {
   const operations: any = useAppSelector(selectOperations());
   const categories: any = useAppSelector(selectCategories());
+  const {filteredOperations} = useFilters()
 
   const getCategoriesBalances = () => {
     return categories?.reduce((acc: any, category: any) => {
@@ -27,19 +29,18 @@ export const useAnalytics = (view?:string): IDataForChart[] => {
         }
       });
 
-      return (acc = [
-        ...acc,
-        {
-          name: category.name,
-          value: view
-            ? incr
-              ? totalBalanceInc
-              : totalBalanceDec
-            : totalBalanceDec,
-          bgColor: category.bgColor,
-          categoryId: category.id,
-        },
-      ]);
+      if(totalBalanceDec > 0) acc.push({
+        name: category.name,
+        value: view
+          ? incr
+            ? totalBalanceInc
+            : totalBalanceDec
+          : totalBalanceDec,
+        bgColor: category.bgColor,
+        categoryId: category.id,
+      })
+
+      return acc
     }, []);
   };
 
@@ -48,7 +49,7 @@ export const useAnalytics = (view?:string): IDataForChart[] => {
       let totalBalance = 0;
       let incr = category === 'topUpCount' && true;
 
-      operations?.forEach((operation: any) => {
+      filteredOperations?.forEach((operation: any) => {
         if (operation.dataType === category) {
           totalBalance += +operation.balance;
         }

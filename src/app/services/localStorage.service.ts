@@ -4,6 +4,7 @@ const localStorageService = {
   COUNT: 'count',
   DATES: 'dates',
   CATEGORIES: 'categories',
+  COLORS: 'colors',
 
   setUser(user: any): void {
     localStorage.setItem(this.USER,  JSON.stringify(user));
@@ -20,6 +21,9 @@ const localStorageService = {
   setCategories(categories: any): void {
     localStorage.setItem(this.CATEGORIES, JSON.stringify(categories));
   },
+  setColors(colors: any): void {
+    localStorage.setItem(this.COLORS, JSON.stringify(colors));
+  },
 
   getUser(): any {
     return JSON.parse(localStorage.getItem(this.USER) || 'null')!;
@@ -35,6 +39,9 @@ const localStorageService = {
   },
   getCategories(): any {
     return JSON.parse(localStorage.getItem(this.CATEGORIES) || 'null')!;
+  },
+  getColors(): any {
+    return JSON.parse(localStorage.getItem(this.COLORS) || 'null')!;
   },
 };
 

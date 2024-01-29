@@ -1,14 +1,18 @@
-import { Avatar, Badge, Box, Flex, Text } from '@chakra-ui/react';
+import { Avatar, Badge, Box, Flex, Text, useColorMode } from '@chakra-ui/react';
 import { IUser } from '../../../../models';
+import ThemeSwitch from '../../common/form/ThemeSwitch';
+import { NavLink } from 'react-router-dom';
 
 interface IUserProps {
   user: IUser;
 }
 
 const UserBadge = ({ user }: IUserProps) => {
+  const { colorMode } = useColorMode();
+  
   return (
     <Flex
-      bg="yellow"
+      bg={"colorBadgeUser." + colorMode}
       px="10px"
       py="7px"
       alignItems={'center'}
@@ -29,6 +33,7 @@ const UserBadge = ({ user }: IUserProps) => {
         bg={'#d7dbe6'}
         p={1}
       />
+      <NavLink to={`/${user.id}`}>
       <Box ml="3">
         <Text fontWeight="bold" fontSize={'20px'} lineHeight={'20px'}>
           {user.name}
@@ -48,6 +53,8 @@ const UserBadge = ({ user }: IUserProps) => {
           Pro
         </Badge>
       </Box>
+      </NavLink>
+      <ThemeSwitch/>
     </Flex>
   );
 };

@@ -1,11 +1,8 @@
 
-
 const COLORS: { [key: string]: string } = {
   primary: '#0d6efd',
   info: '#0dcaf0',
-  secondary: '#6c757d',
   danger: '#dc3545',
-  light: '#f8f9fa',
   orange: '#ff7300',
   violet: '#b700ff',
   pink: '#ff00d4',
@@ -34,8 +31,9 @@ const COLORSKeys = [
   'purple',
   'pinkLight',
   'blue',
+  'gray',
   'red',
-  'orange',
+  'orangeLight',
   'green',
   'teal',
   'cyan',

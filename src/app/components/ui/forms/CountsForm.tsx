@@ -37,7 +37,7 @@ const CountsForm = ({ user }: { user: IUser | null }) => {
   const { register, data, handleSubmit, errors } =
     useFormsData(useFormsDataProps);
 
-  const { category, selectCategory } = data.defaultState;
+  const { category, selectCategory, name } = data.defaultState;
 
   const fields: any = {
     textField: ({ name, label, placeholder }: IFieldsProps) => {
@@ -53,7 +53,7 @@ const CountsForm = ({ user }: { user: IUser | null }) => {
     selectField: ({ name, label, placeholder }: IFieldsProps) => (
       <SelectedField
         {...register(name, label)}
-        // key={label}
+        key={label}
         options={categories?.slice(1)}
         placeholder={placeholder}
         category={category}
@@ -83,7 +83,7 @@ const CountsForm = ({ user }: { user: IUser | null }) => {
               isLoading={(isLoadingUser || isLoadingCount || isLoadingOperation)}
               loadingText="Отправка запроса"
             >
-              {titleBtn}{' '}
+              {titleBtn}
             </Button>
           </Stack>
           {user && (

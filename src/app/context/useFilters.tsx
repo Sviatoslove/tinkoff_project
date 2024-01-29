@@ -5,7 +5,7 @@ import { selectOperations } from '../store/operationsSlice';
 import { IFormsProviderProps } from '../components/common/form/formSettings';
 
 interface IFiltersContext {
-  searchCategory:string|undefined
+  searchCategory: string | undefined;
   dates: (string | ICategories)[] | undefined;
   filteredOperations: IOperation[] | undefined;
   handleDividerCategory: (x: string) => void;
@@ -14,7 +14,7 @@ interface IFiltersContext {
 
 const defaultState = {
   dates: [],
-  searchCategory:'',
+  searchCategory: '',
   filteredOperations: [],
   handleDividerCategory: () => {},
   handleChangeSearchQuery: () => {},
@@ -27,37 +27,46 @@ const useFilters = () => useContext(FiltersContext);
 const FiltersProvider = ({ children }: IFormsProviderProps) => {
   const [searchCategory, setSearchCategory] = useState<string>();
   const [searchQuery, setSearchQuery] = useState<string>();
-  const setDates = new Set()
+  const setDates = new Set();
 
   const operations = useAppSelector(selectOperations());
 
-  const filteredOperations: IOperation[] | undefined = operations?.filter(
-    ({ category }) => searchCategory ? category === searchCategory : category
-    ).filter((operation: any)=> {
-      if(searchQuery) {
-        const fields = ['date', 'name', 'content', 'balance']
-        const search = searchQuery?.trim().toLowerCase()
-        for(const field of fields) {
-          if(operation[field].toLowerCase().includes(search)) return operation
-        }
-      }else return operation
+  const filteredOperations: IOperation[] | undefined = operations
+    ?.filter(({ category }) => {
+      if (searchCategory) {
+        if (category === searchCategory || category === '12345')
+          return category;
+      } else return category;
     })
-    
-  filteredOperations?.forEach(({ date }) => setDates.add(date));
+    .filter((operation: any) => {
+      if (searchQuery) {
+        const fields = ['date', 'name', 'content', 'balance'];
+        const search = searchQuery?.trim().toLowerCase();
+        for (const field of fields) {
+          if (operation[field].toLowerCase().includes(search)) return operation;
+        }
+      } else return operation;
+    });
 
-  const data: any = Array.from(setDates)
-  const dates: any = data.toSorted().reverse()
+  filteredOperations?.forEach(({ date, dataType }) => {
+    if (searchCategory) {
+      if (dataType !== 'topUpCount') setDates.add(date);
+    } else setDates.add(date);
+  });
 
-  const handleDividerCategory = (id: string)=>{
-    if(searchCategory!==id){
-      setSearchCategory(id)
-    }else setSearchCategory('')
-  }
+  const data: any = Array.from(setDates);
+  const dates: any = data.toSorted().reverse();
 
-  const handleChangeSearchQuery = (e:EventChange) => {
-    const {target}:any = e
-    setSearchQuery(target.value)
-  }
+  const handleDividerCategory = (id: string) => {
+    if (searchCategory !== id) {
+      setSearchCategory(id);
+    } else setSearchCategory('');
+  };
+
+  const handleChangeSearchQuery = (e: EventChange) => {
+    const { target }: any = e;
+    setSearchQuery(target.value);
+  };
 
   return (
     <FiltersContext.Provider
@@ -67,7 +76,6 @@ const FiltersProvider = ({ children }: IFormsProviderProps) => {
         handleDividerCategory,
         searchCategory,
         handleChangeSearchQuery,
-        // searchQuery
       }}
     >
       {children}

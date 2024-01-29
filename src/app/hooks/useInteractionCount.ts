@@ -17,7 +17,7 @@ import { getRandomAvatar } from '../utils/getRandomAvatar';
 import getRandomNum from '../utils/getRandomNum';
 import Avatars from '../mockData';
 import { userSaved } from '../store/userSlice';
-import { getRandomColor } from '../utils/getRandomColor';
+import { colorsKeys, getRandomColor } from '../utils/getRandomColor';
 
 export function useIteractionCount() {
   const dispatch = useAppDispatch();
@@ -94,6 +94,7 @@ export function useIteractionCount() {
               }
             : selectCategory,
         };
+        localStorageService.setColors(colorsKeys)
         dispatch(operationsSaved(operation, onToast));
         break;
       }

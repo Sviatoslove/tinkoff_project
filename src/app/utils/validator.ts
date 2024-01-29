@@ -1,14 +1,14 @@
 
 export const validatorConfig = {
-  // name: {
-  //   isRequired: {
-  //     message: 'Обязательно для заполнения',
-  //   },
-  //   min: {
-  //     message: 'Длина поля "Название счёта" не менее 2 символов',
-  //     length:'2'
-  //   },
-  // },
+  name: {
+    isRequired: {
+      message: 'Обязательно для заполнения',
+    },
+    min: {
+      message: 'Длина поля "Название счёта" не менее 2 символов',
+      length:'2'
+    },
+  },
   icon: {
     isRequired: {
       message: 'Чтобы продолжить выберите иконку',

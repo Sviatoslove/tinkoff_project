@@ -1,15 +1,14 @@
-import { Badge, Flex, Text } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
 import ChartRound from '../../common/charts/ChartRound';
 import { IDataForChart, useAnalytics } from '../../../hooks/useAnalytics';
-import { RubIcon1 } from '../../../../assets/currency';
-import { useFilters } from '../../../context/useFilters';
+import CategoryBadge from './CategoryBadge';
+import EmptyBadge from './EmptyBadge';
 
 const ChartsBadge = ({ view, bg }: { view?: string; bg?: string }) => {
   const data = useAnalytics(view);
-  const { searchCategory, handleDividerCategory } = useFilters();
+  const emptyChart = !data.length;
   const title = view ? 'Доходы минус расходы' : 'Расходы по категориям';
   const width = view ? 'min-content' : 'fit-content';
-  const activeBadge = '0px 0px 0px 4px rgb(255 219 0 / 62%), 0px 0px 4px 3px rgb(0 255 10)'
 
   return (
     <Flex
@@ -37,33 +36,17 @@ const ChartsBadge = ({ view, bg }: { view?: string; bg?: string }) => {
         >
           {title}
         </Text>
-        <Flex flexWrap={'wrap'}>
+        <Flex
+          flexWrap={'wrap'}
+          w={'100%'}
+          justifyContent={emptyChart ? 'center' : 'start'}
+        >
           {!view &&
-            data
-              .slice(1)
-              .map(({ bgColor, name, value, categoryId }: IDataForChart) => (
-                <Badge
-                  bg={bgColor}
-                  key={name}
-                  borderRadius={15}
-                  mb={2}
-                  mr={2}
-                  w={'fit-content'}
-                  px={'4px'}
-                  display={'flex'}
-                  onClick={() => handleDividerCategory(categoryId)}
-                  role="button"
-                  shadow={searchCategory === categoryId ? activeBadge : '0px 0px 8px 2px rgb(0 0 0), 0px 0px 8px 6px rgb(255 255 255)'}
-                >
-                  <Text w={'fit-content'} color={'white'}>
-                    {name}
-                  </Text>
-                  <Text w={'fit-content'} color={'gold'} ml={2}>
-                    {value}
-                  </Text>
-                  <img src={RubIcon1} width={'10px'} />
-                </Badge>
-              ))}
+            !emptyChart &&
+            data.map((category: IDataForChart) => (
+              <CategoryBadge {...category} key={category.name} />
+            ))}
+          {!data.length && <EmptyBadge />}
         </Flex>
       </Flex>
       <ChartRound data={data} />

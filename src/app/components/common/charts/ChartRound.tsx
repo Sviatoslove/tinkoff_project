@@ -1,7 +1,6 @@
 import { PieChart, Pie, Cell } from 'recharts';
 import _ from 'lodash';
 import { IDataForChart } from '../../../hooks/useAnalytics';
-import { Flex } from '@chakra-ui/react';
 
 const ChartRound = ({ data }: { data?: IDataForChart[] }) => {
   const RADIAN = Math.PI / 180;
@@ -36,32 +35,34 @@ const ChartRound = ({ data }: { data?: IDataForChart[] }) => {
   };
 
   return (
-    <Flex>
-      <PieChart width={190} height={190}>
-        <Pie
-          data={data}
-          cx={90}
-          cy={90}
-          labelLine={false}
-          label={renderCustomizedLabel}
-          outerRadius={90}
-          fill="#8884d8"
-          dataKey="value"
-          color="black"
-          textDecoration={'#0000'}
-        >
-          {data?.map(({ bgColor }: { bgColor: string }, index: number) => {
-            return (
-              <Cell
-                key={`cell-${index}-${bgColor}`}
-                fill={bgColor}
-                strokeWidth={2}
-              />
-            );
-          })}
-        </Pie>
-      </PieChart>
-    </Flex>
+    <>
+      {!!data?.length && (
+        <PieChart width={190} height={190}>
+          <Pie
+            data={data}
+            cx={90}
+            cy={90}
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={90}
+            fill="#8884d8"
+            dataKey="value"
+            color="black"
+            textDecoration={'#0000'}
+          >
+            {data?.map(({ bgColor }: { bgColor: string }, index: number) => {
+              return (
+                <Cell
+                  key={`cell-${index}-${bgColor}`}
+                  fill={bgColor}
+                  strokeWidth={2}
+                />
+              );
+            })}
+          </Pie>
+        </PieChart>
+      )}
+    </>
   );
 };
 
