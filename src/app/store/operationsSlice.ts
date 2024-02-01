@@ -45,37 +45,40 @@ const operationsSlice = createSlice({
         state.entities = payload.oper;
         state.categories = payload.categories;
         state.dates = payload.dates;
-        state.dataLoaded = true;
       }
+      if (payload.oper) state.dataLoaded = true;
       state.isLoading = false;
     },
     operationsReceived: (state, action) => {
       const { payload } = action;
-      let idCategory
+      let idCategory;
       if (!state.entities) state.entities = [];
       if (payload.dataType === 'operations') {
         if (typeof payload.category === 'object') {
           if (!state.categories) state.categories = [];
           const categoryUniq = state.categories.some(({ name, id }) => {
-            if(name === payload.category.name) {
-              idCategory = id
-              return true
+            if (name === payload.category.name) {
+              idCategory = id;
+              return true;
             }
-            return false
-          })
-          if (
-            !categoryUniq
-          ) {
+            return false;
+          });
+          if (!categoryUniq) {
             state.categories.push(payload.category);
             state.entities.push({ ...payload, category: payload.category.id });
-          }else {
-          state.entities.push({ ...payload, category: idCategory });
-        }
+          } else {
+            state.entities.push({ ...payload, category: idCategory });
+          }
         } else state.entities.push(payload);
       } else {
         if (!state.categories) state.categories = [];
-        if(!state.categories.length) state.categories.push({name: 'Пополнение счёта', id: '12345', dataType: 'categoties'});
-        state.entities.push({...payload, category: '12345' })
+        if (!state.categories.length)
+          state.categories.push({
+            name: 'Пополнение счёта',
+            id: '12345',
+            dataType: 'categoties',
+          });
+        state.entities.push({ ...payload, category: '12345' });
       }
 
       const { date } = payload;
@@ -88,9 +91,7 @@ const operationsSlice = createSlice({
     },
     categoriesSaved: (state, action) => {
       const { payload } = action;
-      if (
-        !state.categories?.some(({ name }) => name === payload.name)
-      ) {
+      if (!state.categories?.some(({ name }) => name === payload.name)) {
         state.categories?.push(payload);
       }
       state.isLoading = false;
@@ -160,7 +161,7 @@ const {
   operationsTransform,
   operationsRemoved,
   getDataFromLocal,
-  categoriesSaved
+  categoriesSaved,
 } = actions;
 
 export const getDataOperLocal = () => async (dispatch: AppDispatch) => {
@@ -170,17 +171,17 @@ export const getDataOperLocal = () => async (dispatch: AppDispatch) => {
   const dates = localStorageService.getDates();
   const categories = localStorageService.getCategories();
   const oper = localStorageService.getOper();
-  
+
   dispatch(operationsRequested());
   const data = await operationCreate(user);
-  
+
   dispatch(
     getDataFromLocal({
       dates,
       categories,
       oper,
     })
-    );
+  );
   dispatch(getDataUserLocal(data));
 };
 
@@ -189,7 +190,7 @@ export const categoriesAdd =
   async (dispatch: AppDispatch) => {
     dispatch(operationsRequested());
     const data = await operationCreate(payload);
-     dispatch(categoriesSaved(data));
+    dispatch(categoriesSaved(data));
     onToast(type);
   };
 
@@ -233,6 +234,9 @@ export const selectIsLoadingOperations = () => (state: RootState) =>
 
 export const selectCategories = () => (state: RootState) =>
   state.operations.categories;
+
+export const selectDataLoadedOperations = () => (state: RootState) =>
+  state.operations.dataLoaded;
 
 export const selectDates = () => (state: RootState) => state.operations.dates;
 

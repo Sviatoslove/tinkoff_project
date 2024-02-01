@@ -23,20 +23,12 @@ const ListOper = ({ date }: { date: string }) => {
       mb={3}
       direction={'column'}
       p={2}
-      shadow={
-        '2px 2px 4px 0px rgb(255 255 255), 1px 1px 4px 2px rgb(251 251 251)'
-      }
+      shadow={'forContainersWhite'}
       borderRadius={15}
     >
       <Text ml={10} as="b" fontSize="3xl" w={'fit-content'}>
         {date}
-        <Divider
-          mb={3}
-          borderRadius={10}
-          shadow={
-            '2px 2px 4px 0px rgb(255 255 255), 1px 1px 4px 2px rgb(251 251 251)'
-          }
-        />
+        <Divider mb={3} borderRadius={10} shadow={'forContainersWhite'} />
       </Text>
       <TransitionGroup>
         {filteredOperations?.map((operation) => {

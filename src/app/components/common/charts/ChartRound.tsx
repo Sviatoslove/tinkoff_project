@@ -1,6 +1,7 @@
 import { PieChart, Pie, Cell } from 'recharts';
 import _ from 'lodash';
 import { IDataForChart } from '../../../hooks/useAnalytics';
+import { Flex } from '@chakra-ui/react';
 
 const ChartRound = ({ data }: { data?: IDataForChart[] }) => {
   const RADIAN = Math.PI / 180;
@@ -34,9 +35,9 @@ const ChartRound = ({ data }: { data?: IDataForChart[] }) => {
     );
   };
 
-  return (
-    <>
-      {!!data?.length && (
+  return (<>
+    {!!data?.length && (
+        <Flex minW={{base: '100px','1sm': '190px'}}>
         <PieChart width={190} height={190}>
           <Pie
             data={data}
@@ -61,8 +62,9 @@ const ChartRound = ({ data }: { data?: IDataForChart[] }) => {
             })}
           </Pie>
         </PieChart>
+        </Flex>
       )}
-    </>
+      </>
   );
 };
 

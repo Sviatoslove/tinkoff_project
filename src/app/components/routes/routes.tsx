@@ -6,9 +6,6 @@ import { IUser } from "../../../models";
 
 const routes = (isLoggedIn: IUser | null, location:any) => {
   const userId = location.pathname.split("/")[1];
-  console.log('userId:', userId)
-  console.log('isLoggedIn?.id:', isLoggedIn?.id===userId)
-
   return [
     {
       name: "Главная страница",
@@ -20,7 +17,6 @@ const routes = (isLoggedIn: IUser | null, location:any) => {
       path: ":userId",
       element: isLoggedIn?.id === userId ? <UserPage /> : <Navigate to="/" />,
     },
-
   ];
 };
 

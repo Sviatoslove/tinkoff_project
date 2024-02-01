@@ -5,14 +5,21 @@ import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
 import store from './app/store/createStore';
 import { Provider } from 'react-redux';
 import { FormsProvider } from './app/context/useForms';
-import { colors, config } from './themesSettings';
+import {
+  breakpoints,
+  colors,
+  components,
+  config,
+  shadows,
+} from './themesSettings';
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const theme = extendTheme({ config, colors });
+const theme = extendTheme({ config, colors, components, shadows, breakpoints });
+console.log('theme:', theme);
 
 root.render(
   <Provider store={store}>

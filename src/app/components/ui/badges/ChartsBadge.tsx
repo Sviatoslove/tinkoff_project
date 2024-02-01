@@ -1,30 +1,46 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Text, useStyleConfig } from '@chakra-ui/react';
 import ChartRound from '../../common/charts/ChartRound';
 import { IDataForChart, useAnalytics } from '../../../hooks/useAnalytics';
 import CategoryBadge from './CategoryBadge';
 import EmptyBadge from './EmptyBadge';
 
-const ChartsBadge = ({ view, bg }: { view?: string; bg?: string }) => {
+const ChartsBadge = ({ view}: { view?: string }) => {
   const data = useAnalytics(view);
+  const FlexBadge = useStyleConfig('FlexBadge', { variant: view ? 'chartAll' : 'chartCategory' });
+  // const data = [
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  //   {name: 'Еда', value: 2000, bgColor: '#6f42c1', categoryId: 'fOvwf0dgM804h2ixnLUjg'},
+  // ]
   const emptyChart = !data.length;
   const title = view ? 'Доходы минус расходы' : 'Расходы по категориям';
-  const width = view ? 'min-content' : 'fit-content';
 
   return (
     <Flex
-      bg={bg}
-      px="10px"
-      py="7px"
-      alignItems={'center'}
-      borderRadius={'10px'}
-      flexGrow={view ? 0 : 1}
-      mt={2}
-      ml={2}
+      __css={FlexBadge}
     >
       <Flex
         flexDirection={'column'}
         h={'100%'}
-        alignContent={'flex-start'}
+        alignContent={'start'}
         flexGrow={1}
       >
         <Text
@@ -32,7 +48,7 @@ const ChartsBadge = ({ view, bg }: { view?: string; bg?: string }) => {
           lineHeight={'15px'}
           mb={2}
           alignSelf="start"
-          w={width}
+          w={view ? 'min-content':'fit-content'}
         >
           {title}
         </Text>

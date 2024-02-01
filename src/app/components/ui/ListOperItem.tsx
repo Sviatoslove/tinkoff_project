@@ -1,7 +1,7 @@
 import { Flex, IconButton, Tooltip } from '@chakra-ui/react';
 import { IOperation } from '../../../models';
 import { SmallCloseIcon } from '@chakra-ui/icons';
-import SkeletonOperItem from '../common/SkeletonOperItem';
+import SkeletonOperItem from '../common/skeletons/SkeletonOperItem';
 import useListOperItem from '../../hooks/useListOperItem';
 
 const ListOperItem = ({ operation }: { operation: IOperation }) => {
@@ -21,9 +21,7 @@ const ListOperItem = ({ operation }: { operation: IOperation }) => {
           mb={3}
           direction={'column'}
           borderRadius={15}
-          shadow={
-            '2px 2px 4px 0px rgb(255 255 255), 1px 1px 4px 2px rgb(178 218 221)'
-          }
+          shadow={'whiteAndLightBlue'}
           p={2}
         >
           <Flex justify={'space-evenly'} align={'center'}>

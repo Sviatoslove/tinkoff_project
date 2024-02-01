@@ -15,18 +15,22 @@ const InteractionCount = () => {
     boxShadow: '3px 3px 4px 0px rgba(0, 0, 0, 0.6)',
     bg: 'transparent',
     color: 'white',
+    borderWidth: '2px',
   };
 
   return (
     <ButtonGroup
       alignItems={'center'}
       h={'min-content'}
+      w={'100%'}
       justifyContent={'space-evenly'}
     >
       <Tooltip hasArrow label="Оплатить" placement="right-start">
         <IconButton
           _hover={hover}
-          bg={colorMode === 'light' ? '#52cf52' : '#074b07'}
+          maxW={{base: '100px', '2lg': '40px'}}
+          w={'100%'}
+          bg={'colorBtnAddOperation.' + colorMode}
           datatype="addOperation"
           onClick={handleClickCount}
           aria-label="Оплатить"
@@ -36,7 +40,9 @@ const InteractionCount = () => {
       <Tooltip hasArrow label="Пополнить" placement="right-start">
         <IconButton
           _hover={hover}
-          bg={colorMode === 'light' ? '#cd748c' : '#3f0514'}
+          maxW={{base: '100px', '2lg': '40px'}}
+          w={'100%'}
+          bg={'colorBtnTopUpCount.' + colorMode}
           datatype="topUpCount"
           onClick={handleClickCount}
           aria-label="Пополнить"
@@ -46,7 +52,9 @@ const InteractionCount = () => {
       <Tooltip hasArrow label="Перевести" placement="right-start">
         <IconButton
           _hover={hover}
-          bg={colorMode === 'light' ? '#7876e1' : '#080736'}
+          maxW={{base: '100px', '2lg': '40px'}}
+          w={'100%'}
+          bg={'colorBtnAddTranslate.' + colorMode}
           datatype="addTranslate"
           onClick={handleClickCount}
           aria-label="Перевести"

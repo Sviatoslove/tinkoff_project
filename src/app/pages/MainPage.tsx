@@ -1,34 +1,24 @@
-import { Flex, useColorMode } from '@chakra-ui/react';
+import { Flex, useColorMode, useMediaQuery } from '@chakra-ui/react';
 import SearchInput from '../components/ui/SearchInput';
 import { FiltersProvider } from '../context/useFilters';
 import FormsLayouts from '../layouts/FormsLayouts';
-import UserBadge from '../components/ui/badges/UserBadge';
+import UserBadgeForMain from '../components/ui/badges/UserBadgeForMain';
 import CountsBadge from '../components/ui/badges/CountsBadge';
 import ChartsBadge from '../components/ui/badges/ChartsBadge';
 import OperationsHistory from '../components/ui/OperationsHistory';
-import CustomSkeleton from '../components/common/CustomSkeleton';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import CustomSkeleton from '../components/common/skeletons/CustomSkeleton';
+import { useAppSelector } from '../hooks/hooks';
 import { selectIsLoadingUser, selectUser } from '../store/userSlice';
-import { getDataOperLocal, selectOperations } from '../store/operationsSlice';
+import { selectOperations } from '../store/operationsSlice';
 import { selectIsLoadingCount } from '../store/countsSlice';
-import { useEffect } from 'react';
-import localStorageService from '../services/localStorage.service';
 
 const MainPage = () => {
-  const dispatch = useAppDispatch();
-  const { colorMode } = useColorMode();
+  const [isLessThan814] = useMediaQuery('(max-width: 814px)');
+  const [isLargeThan671] = useMediaQuery('(min-width: 671px)');
   const user = useAppSelector(selectUser());
   const operations = useAppSelector(selectOperations());
   const loadingStatusUser = useAppSelector(selectIsLoadingUser());
   const IsLoadingCounts = useAppSelector(selectIsLoadingCount());
-
-  useEffect(() => {
-    if (!user && !!localStorageService.getUser()) {
-    console.log('useEffect:')
-
-      dispatch(getDataOperLocal());
-    }
-  }, []);
 
   return (
     <>
@@ -36,17 +26,18 @@ const MainPage = () => {
       {user && !IsLoadingCounts && (
         <FiltersProvider>
           <SearchInput />
-          <Flex>
-            <UserBadge user={user} />
-            <CountsBadge />
+
+          <Flex flexDirection={{ base: 'column', '2lg': 'row' }}>
+            <Flex>
+              {isLargeThan671 && <UserBadgeForMain user={user} />}
+              <CountsBadge />
+              {isLessThan814 && <ChartsBadge view="general" />}
+            </Flex>
             {operations && (
-              <>
-                <ChartsBadge
-                  bg={'colorBadgeChartAll.' + colorMode}
-                  view="general"
-                />
-                <ChartsBadge bg={'colorBadgeChartCategories.' + colorMode} />
-              </>
+              <Flex w={{ '2lg': '100%' }}>
+                {!isLessThan814 && <ChartsBadge view="general" />}
+                <ChartsBadge />
+              </Flex>
             )}
           </Flex>
           <OperationsHistory />

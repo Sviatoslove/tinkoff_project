@@ -8,7 +8,7 @@ const ThemeSwitch = () => {
       : 'https://img.icons8.com/dusk/24/sun--v1.png';
 
   return (
-    <Flex flexDirection={'column'} alignItems={'start'} height={'100%'}>
+    <Flex flexDirection={'column'} alignItems={'start'} height={'100%'} ml={3}>
       <img src={icon} alt="logo" />
       <Switch size="sm" mt={2} onChange={toggleColorMode} />
     </Flex>
