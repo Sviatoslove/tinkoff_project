@@ -1,5 +1,3 @@
-
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -17,7 +15,6 @@ code {
 .listOperItem-enter {
   opacity: 0;
   transform: translateX(-350px);
-
 }
 .listOperItem-enter-active {
   opacity: 1;
@@ -53,4 +50,42 @@ code {
   transform: translateY(350px);
   opacity: 0;
   transition: opacity 600ms ease-in, transform 750ms ease-in;
+}
+
+.balance-enter {
+  opacity: 0;
+  position: absolute;
+}
+.balance-enter-active {
+  opacity: 1;
+  animation: balance-change-new 75ms ease 750ms 20;
+  animation-fill-mode: both;
+  transition: opacity 1500ms ease 750ms;
+}
+.balance-exit {
+  opacity: 1;
+}
+.balance-exit-active {
+  opacity: 0;
+  animation: balance-change 75ms ease 0ms 20;
+  animation-fill-mode: both;
+  transition: opacity 1500ms ease;
+}
+@keyframes balance-change-new {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(360deg);
+  }
+}
+
+@keyframes balance-change {
+  0% {
+    transform: rotateX(360deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
 }
